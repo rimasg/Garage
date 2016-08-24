@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="+000 000 00000"
+        android:inputType="phone"
+        android:title="@string/pref_phone_no"
+        android:key="@string/pref_key_phone_no"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        />
+
+    <CheckBoxPreference
+        android:title="@string/pref_auto_dial"
+        android:key="@string/pref_key_auto_dial"
+        android:checked="false"/>
+
+</PreferenceScreen>
