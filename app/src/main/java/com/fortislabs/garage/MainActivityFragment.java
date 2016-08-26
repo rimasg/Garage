@@ -4,10 +4,10 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +48,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     private void callToOpenGarage() {
 //        Toast.makeText(getActivity(), "Make call to open garage", Toast.LENGTH_SHORT).show();
         // TODO: 2016.08.22 Implement checkSelfPermission()
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, REQ_CALL_PHONE);
             return;
         }
@@ -59,5 +59,17 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         intent.setData(Uri.parse("tel:"));
         startActivity(intent);
 */
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_CALL_PHONE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    callToOpenGarage();
+                }
+                break;
+        }
     }
 }

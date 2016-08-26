@@ -10,8 +10,7 @@
         android:key="@string/pref_key_phone_no"
         android:maxLines="1"
         android:selectAllOnFocus="true"
-        android:singleLine="true"
-        />
+        android:singleLine="true"/>
 
     <CheckBoxPreference
         android:title="@string/pref_auto_dial"
