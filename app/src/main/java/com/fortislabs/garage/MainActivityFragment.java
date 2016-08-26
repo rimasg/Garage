@@ -1,9 +1,13 @@
 package com.fortislabs.garage;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import android.widget.Toast;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment implements View.OnClickListener {
+    private static final int REQ_CALL_PHONE = 410;
 
     public MainActivityFragment() {
     }
@@ -43,8 +48,12 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     private void callToOpenGarage() {
 //        Toast.makeText(getActivity(), "Make call to open garage", Toast.LENGTH_SHORT).show();
         // TODO: 2016.08.22 Implement checkSelfPermission()
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, REQ_CALL_PHONE);
+            return;
+        }
         String phoneNo = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString(getString(R.string.pref_key_phone_no), "+000");
-        Toast.makeText(getActivity(), "Phone no. from Prefs: " + phoneNo, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Phone no. from Prefs: " + phoneNo, Toast.LENGTH_SHORT).show();
 /*
         final Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:"));
